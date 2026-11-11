@@ -1,0 +1,46 @@
+{
+  "inactividad": {
+    "bloqueo_min": 60,
+    "pantalla_min": 60,
+    "suspender_min": 120,
+    "bloquear_al_suspender": true
+  },
+  "energia": {
+    "modo": "fijo",
+    "perfil": "normal",
+    "perfil_corriente": "normal",
+    "perfil_bateria": "ahorro",
+    "carga_inicio": null,
+    "carga_fin": null
+  },
+  "mosaico": {
+    "modo": 4,
+    "hueco": 0
+  },
+  "archivos": {
+    "vista": "grid",
+    "ocultos": false,
+    "orden": "nombre",
+    "desc": false,
+    "previa": true
+  },
+  "pantalla": {
+    "protector": "siempre",
+    "temp_noche": 2500,
+    "temp_dia": 6500,
+    "atardecer": "19:00",
+    "amanecer": "07:00",
+    "transicion": 1,
+    "gamma": 1.0
+  },
+  "apariencia": {
+    "titulo_alto": 20,
+    "borde": 0
+  },
+  "fondo": {
+    "animaciones": true
+  },
+  "apps": {
+    "intensidad": "completo"
+  }
+}

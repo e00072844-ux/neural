@@ -1,0 +1,26 @@
+{
+ "fg": "#e9e4e4",
+ "bg": "rgba(0, 0, 0, 0)",
+ "cursor": "#00eaff",
+ "cursorText": "#050507",
+ "selection": "#69151d",
+ "selectionText": "#e9e4e4",
+ "ansi": [
+  "#332123",
+  "#ff2d3f",
+  "#5afa38",
+  "#fcee0a",
+  "#656afb",
+  "#fa38e5",
+  "#00eaff",
+  "#d1c0c1",
+  "#8a5458",
+  "#fb737f",
+  "#92f87c",
+  "#f8ef50",
+  "#a8abfb",
+  "#f87ceb",
+  "#47ecfa",
+  "#f4f2f2"
+ ]
+}

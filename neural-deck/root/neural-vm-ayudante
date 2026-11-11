@@ -1,0 +1,23 @@
+#!/bin/bash
+# neural-vm-ayudante: ayudante de NEURAL//VM que corre como root vía pkexec.
+# SOLO sabe hacer esto (todo lo demás se rechaza):
+#   neural-vm-ayudante hugepages N   (reservar N páginas grandes; 0 = liberarlas;
+#                                     como mucho las que quepan en el 75 % de la RAM)
+# Política: /usr/share/polkit-1/actions/org.local.neural.vm.policy
+set -u
+export PATH=/usr/bin:/usr/sbin
+
+case "${1:-}" in
+hugepages)
+    n="${2:-}"
+    [[ "$n" =~ ^[0-9]+$ ]] || { echo "uso: neural-vm-ayudante hugepages N" >&2; exit 2; }
+    kb=$(awk '/^Hugepagesize:/ {print $2}' /proc/meminfo)
+    total=$(awk '/^MemTotal:/ {print $2}' /proc/meminfo)
+    max=$(( total * 3 / 4 / kb ))
+    (( n <= max )) || { echo "error: $n páginas es más del 75 % de la RAM (máx. $max)" >&2; exit 3; }
+    sync; echo 3 > /proc/sys/vm/drop_caches; echo 1 > /proc/sys/vm/compact_memory  # memoria seguida
+    echo "$n" > /proc/sys/vm/nr_hugepages || { echo "error: no pude reservar" >&2; exit 3; }
+    ;;
+*)
+    echo "uso: neural-vm-ayudante hugepages N" >&2; exit 2 ;;
+esac

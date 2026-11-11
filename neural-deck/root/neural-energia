@@ -1,0 +1,56 @@
+#!/bin/bash
+# neural-energia: ayudante de NEURAL//AJUSTES que corre como root vía pkexec.
+# SOLO sabe hacer esto (todo lo demás se rechaza):
+#   neural-energia perfil ahorro|normal|rendimiento
+#   neural-energia bateria INICIO FIN     (umbrales de carga, 0-100, INICIO < FIN, FIN >= 50)
+# Política: /usr/share/polkit-1/actions/org.local.neural.energia.policy
+set -u
+export PATH=/usr/bin:/usr/sbin
+
+PERFIL=/sys/firmware/acpi/platform_profile
+# primera batería que admita umbrales de carga (BAT0, BAT1, CMB0…)
+BAT=
+for b in /sys/class/power_supply/*; do
+    [ "$(cat "$b/type" 2>/dev/null)" = Battery ] && [ -e "$b/charge_control_end_threshold" ] && { BAT=$b; break; }
+done
+
+escribir() {  # escribir ARCHIVO VALOR
+    printf '%s' "$2" > "$1" 2>/dev/null || { echo "error: no pude escribir $2 en $1" >&2; exit 3; }
+}
+
+cpus() {  # escribe $1 en cpufreq/$2 de cada CPU
+    local f
+    for f in /sys/devices/system/cpu/cpu[0-9]*/cpufreq/"$2"; do
+        [ -w "$f" ] && escribir "$f" "$1"
+    done
+}
+
+case "${1:-}" in
+perfil)
+    case "${2:-}" in
+    ahorro)      escribir "$PERFIL" low-power;   cpus powersave scaling_governor; cpus power energy_performance_preference ;;
+    normal)      escribir "$PERFIL" balanced;    cpus powersave scaling_governor; cpus balance_performance energy_performance_preference ;;
+    rendimiento) escribir "$PERFIL" performance; cpus performance scaling_governor ;;  # EPP pasa a performance solo
+    *) echo "uso: neural-energia perfil ahorro|normal|rendimiento" >&2; exit 2 ;;
+    esac
+    ;;
+bateria)
+    [ -n "$BAT" ] || { echo "error: no hay batería con umbrales de carga" >&2; exit 4; }
+    ini="${2:-}"; fin="${3:-}"
+    [[ "$ini" =~ ^[0-9]{1,3}$ && "$fin" =~ ^[0-9]{1,3}$ ]] || { echo "uso: neural-energia bateria INICIO FIN" >&2; exit 2; }
+    ini=$((10#$ini)); fin=$((10#$fin))
+    (( fin >= 50 && fin <= 100 && ini >= 0 && ini < fin )) || { echo "error: hace falta 0 <= INICIO < FIN, 50 <= FIN <= 100" >&2; exit 2; }
+    # el firmware exige inicio < fin en todo momento: elegir el orden
+    if [ ! -e "$BAT/charge_control_start_threshold" ]; then   # algunas solo tienen el de fin
+        escribir "$BAT/charge_control_end_threshold" "$fin"; exit 0
+    fi
+    actual_ini=$(< "$BAT/charge_control_start_threshold")
+    if (( fin > actual_ini )); then
+        escribir "$BAT/charge_control_end_threshold" "$fin"; escribir "$BAT/charge_control_start_threshold" "$ini"
+    else
+        escribir "$BAT/charge_control_start_threshold" "$ini"; escribir "$BAT/charge_control_end_threshold" "$fin"
+    fi
+    ;;
+*)
+    echo "uso: neural-energia perfil ahorro|normal|rendimiento | bateria INICIO FIN" >&2; exit 2 ;;
+esac

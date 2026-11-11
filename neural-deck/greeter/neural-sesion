@@ -1,0 +1,6 @@
+#!/bin/bash -l
+# Sesión NEURAL (Wayfire + neural-deck), igual que la arranca NEURAL//LOGIN.
+# «bash -l» carga /etc/profile y ~/.bash_profile. Lo usan neural.desktop y tuigreet.
+export XDG_SESSION_TYPE=wayland XDG_SESSION_DESKTOP=wayfire XDG_CURRENT_DESKTOP=Wayfire
+export GTK_A11Y=none
+exec wayfire > "$HOME/wayfire.log" 2>&1

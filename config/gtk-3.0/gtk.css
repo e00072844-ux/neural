@@ -1,0 +1,46 @@
+/* Lo escribe ~/neural-deck/temas_apps.py con el tema NEURAL activo: no editar a mano.
+   Retoques propios: ponlos en neural-extra.css de esta carpeta. */
+
+@define-color theme_bg_color #000000;
+@define-color theme_base_color #000000;
+@define-color theme_fg_color #e8f9ff;
+@define-color theme_text_color #e8f9ff;
+@define-color theme_selected_bg_color #01cdfe;
+@define-color theme_selected_fg_color #000000;
+@define-color insensitive_bg_color #000c0f;
+@define-color insensitive_fg_color #8b7fb8;
+@define-color borders #003e4c;
+@define-color unfocused_borders #003e4c;
+@define-color warning_color #fffb96;
+
+window, .background, dialog, filechooser, headerbar, .titlebar, actionbar,
+scrolledwindow, viewport, list, listview, gridview, columnview, treeview.view,
+placessidebar, .sidebar, .navigation-sidebar, paned, popover > contents, popover.background, menu, .menu {
+  background-color: #000000; background-image: none;
+  color: #e8f9ff; border-color: #003e4c; box-shadow: none;
+}
+headerbar, .titlebar { border-bottom: 1px solid #003e4c; }
+row:hover, treeview.view:hover { background-color: #001d24; }
+row:selected, treeview.view:selected, *:selected, selection {
+  background-color: #005266; color: #e8f9ff;
+}
+entry, spinbutton, button, combobox button, dropdown > button, .linked > button {
+  background-color: #000c0f; background-image: none; color: #e8f9ff;
+  border: 1px solid #003e4c; box-shadow: none; text-shadow: none;
+}
+button.flat { background-color: transparent; border-color: transparent; }
+button:hover, button.flat:hover { background-color: #001d24; border-color: #01cdfe; }
+entry:focus, entry:focus-within, spinbutton:focus-within { border-color: #01cdfe; }
+button.suggested-action { background-color: #01cdfe; color: #000000; border-color: #01cdfe; }
+button.suggested-action:hover { background-color: #4ddcfe; }
+button.destructive-action { background-color: #000000; color: #fffb96; border-color: #fffb96; }
+.dim-label, label.dim-label, .subtitle { color: #8b7fb8; }
+link, *:link { color: #ff71ce; }
+check:checked, radio:checked, switch:checked { background-color: #01cdfe; color: #000000; border-color: #01cdfe; }
+progressbar progress, scale highlight, levelbar block.filled { background-color: #01cdfe; border-color: #01cdfe; }
+scrollbar, scrollbar trough { background-color: #000000; }
+scrollbar slider { background-color: #8b7fb8; }
+scrollbar slider:hover { background-color: #01cdfe; }
+tooltip, tooltip.background { background-color: #000c0f; color: #e8f9ff; border: 1px solid #003e4c; }
+
+@import url("neural-extra.css");

@@ -1,0 +1,4 @@
+#%PAM-1.0
+# /etc/pam.d/neural-lock: contraseña de la pantalla de bloqueo NEURAL//LOCK (bloqueo.py)
+auth      include   system-auth
+account   include   system-auth

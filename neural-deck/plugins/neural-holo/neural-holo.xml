@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<wayfire>
+	<plugin name="neural-holo">
+		<_short>NEURAL//HOLO</_short>
+		<_long>Efecto holograma para abrir y cerrar ventanas (animate: open_animation = holograma).</_long>
+		<category>Effects</category>
+		<option name="duration" type="animation">
+			<_short>Duración</_short>
+			<_long>Duración del efecto holograma.</_long>
+			<default>520ms linear</default>
+		</option>
+		<option name="color" type="color">
+			<_short>Color</_short>
+			<_long>Color del holograma (lo pone decoracion.py según el tema).</_long>
+			<default>#00e5ffff</default>
+		</option>
+	</plugin>
+</wayfire>

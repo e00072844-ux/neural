@@ -1,0 +1,12 @@
+# greetd + NEURAL//LOGIN. Va en la VT 7: tty1 queda libre como consola de rescate.
+[terminal]
+vt = 7
+
+[general]
+# la sesión usa «bash -l», que ya carga /etc/profile y ~/.bash_profile
+source_profile = false
+
+[default_session]
+# NEURAL//LOGIN y, si no llega a iniciar sesión, tuigreet en modo texto (ver neural-login)
+command = "/usr/local/bin/neural-login"
+user = "greeter"

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+  <vendor>NEURAL//DECK</vendor>
+  <action id="org.local.neural.vm">
+    <description>Reservar memoria (hugepages) para las máquinas virtuales</description>
+    <message>NEURAL//VM quiere reservar o liberar hugepages para una máquina virtual.</message>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>yes</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/libexec/neural-vm-ayudante</annotate>
+  </action>
+</policyconfig>

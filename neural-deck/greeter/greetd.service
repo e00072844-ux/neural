@@ -1,0 +1,20 @@
+# NEURAL//LOGIN: sustituye a /usr/lib/systemd/system/greetd.service del paquete.
+# Va en la VT 7 y NO choca con getty@tty1: tty1 queda como consola de rescate.
+[Unit]
+Description=greetd + NEURAL//LOGIN
+After=systemd-user-sessions.service plymouth-quit-wait.service
+StartLimitBurst=5
+StartLimitIntervalSec=30
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/greetd
+IgnoreSIGPIPE=no
+SendSIGHUP=yes
+TimeoutStopSec=30s
+KeyringMode=shared
+Restart=always
+RestartSec=1
+
+[Install]
+Alias=display-manager.service

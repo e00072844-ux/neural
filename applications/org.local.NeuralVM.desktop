@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//VM
+GenericName=Máquinas virtuales
+Comment=Arrancar, configurar y hacer snapshots de VMs QEMU/KVM
+Exec=python3 @HOME@/neural-deck/vm.py
+Icon=org.local.NeuralVM
+Terminal=false
+Categories=System;Emulator;
+Keywords=vm;qemu;kvm;maquina;virtual;macos;windows;linux;snapshot;
+StartupWMClass=org.local.NeuralVM

@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//PAK
+GenericName=Gestor de aplicaciones
+Comment=Apps Flatpak: instaladas, actualizaciones, recomendaciones y Flathub
+Exec=python3 @HOME@/neural-deck/pak.py
+Icon=org.local.NeuralPak
+Terminal=false
+Categories=System;PackageManager;
+Keywords=flatpak;flathub;apps;tienda;store;instalar;actualizar;software;
+StartupWMClass=org.local.NeuralPak
+Actions=actualizaciones;
+
+[Desktop Action actualizaciones]
+Name=Buscar actualizaciones
+Exec=python3 @HOME@/neural-deck/pak.py --actualizaciones

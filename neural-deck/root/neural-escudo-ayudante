@@ -1,0 +1,64 @@
+#!/bin/bash
+# neural-escudo-ayudante: ayudante de NEURAL//ESCUDO que corre como root vía pkexec.
+# SOLO sabe hacer esto (todo lo demás se rechaza):
+#   permitir|denegar PROTO PUERTO[:PUERTO] ORIGEN [COMENTARIO]
+#   borrar allow|deny|reject|limit PROTO PUERTO[:PUERTO] ORIGEN
+#   activar | desactivar
+# PROTO: tcp, udp o any. ORIGEN: any, IPv4 o IPv6 (con /máscara opcional).
+# Política: /usr/share/polkit-1/actions/org.local.neural.escudo.policy
+set -u
+export PATH=/usr/bin:/usr/sbin
+
+uso() { echo "error: $1" >&2; exit 2; }
+
+proto_ok() { [[ "$1" =~ ^(tcp|udp|any)$ ]] || uso "protocolo no válido"; }
+
+puerto_ok() {
+    [[ "$1" =~ ^([0-9]{1,5})(:([0-9]{1,5}))?$ ]] || uso "puerto no válido"
+    local a=$((10#${BASH_REMATCH[1]})) b=$((10#${BASH_REMATCH[3]:-${BASH_REMATCH[1]}}))
+    (( a >= 1 && b <= 65535 && a <= b )) || uso "puerto fuera de rango"
+}
+
+origen_ok() {
+    [[ "$1" == any ]] && return
+    if [[ "$1" =~ ^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})(/([0-9]{1,2}))?$ ]]; then
+        local i
+        for i in 1 2 3 4; do (( 10#${BASH_REMATCH[$i]} <= 255 )) || uso "origen no válido"; done
+        (( 10#${BASH_REMATCH[6]:-32} <= 32 )) || uso "máscara no válida"
+    elif [[ "$1" == *:* && "$1" =~ ^[0-9a-fA-F:]+(/[0-9]{1,3})?$ ]]; then
+        :
+    else
+        uso "origen no válido"
+    fi
+}
+
+# Deja en REGLA los argumentos de ufw para: proto, puerto, origen
+regla() {
+    [[ "$1" == any && "$2" == *:* ]] && uso "un rango de puertos necesita tcp o udp"
+    REGLA=()
+    [[ "$1" != any ]] && REGLA+=(proto "$1")
+    REGLA+=(from "$3" to any port "$2")
+}
+
+case "${1:-}" in
+permitir|denegar)
+    (( $# >= 4 && $# <= 5 )) || uso "faltan datos"
+    proto_ok "$2"; puerto_ok "$3"; origen_ok "$4"
+    c="${5:-}"
+    [[ "$c" =~ ^[[:alnum:]\ _-]{0,40}$ ]] || uso "comentario no válido"
+    regla "$2" "$3" "$4"
+    [[ -n "$c" ]] && REGLA+=(comment "$c")
+    [[ "$1" == permitir ]] && a=allow || a=deny
+    exec ufw "$a" "${REGLA[@]}"
+    ;;
+borrar)
+    (( $# == 5 )) || uso "faltan datos"
+    [[ "$2" =~ ^(allow|deny|reject|limit)$ ]] || uso "acción no válida"
+    proto_ok "$3"; puerto_ok "$4"; origen_ok "$5"
+    regla "$3" "$4" "$5"
+    exec ufw --force delete "$2" "${REGLA[@]}"
+    ;;
+activar)    exec ufw --force enable ;;
+desactivar) exec ufw disable ;;
+*) uso "orden desconocida" ;;
+esac

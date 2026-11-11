@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//VISOR
+GenericName=Visor de imágenes y PDF
+Comment=Abre imágenes y documentos PDF
+Exec=python3 @HOME@/neural-deck/visor.py %f
+Icon=org.local.NeuralVisor
+Terminal=false
+Categories=Graphics;Viewer;
+MimeType=application/pdf;image/png;image/jpeg;image/webp;image/gif;image/bmp;image/tiff;image/avif;image/heic;image/heif;image/jxl;image/svg+xml;
+Keywords=imagen;foto;pdf;visor;documento;
+StartupWMClass=org.local.NeuralVisor

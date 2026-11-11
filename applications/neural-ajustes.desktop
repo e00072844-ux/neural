@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//AJUSTES
+GenericName=Ajustes
+Comment=Configuración de NEURAL//DECK (inactividad, energía, batería)
+Exec=python3 @HOME@/neural-deck/ajustes.py
+Icon=org.local.NeuralAjustes
+Terminal=false
+Categories=Settings;System;
+StartupWMClass=org.local.NeuralAjustes

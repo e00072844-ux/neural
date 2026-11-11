@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//CVE
+GenericName=Vigilante de seguridad
+Comment=Fallos de seguridad conocidos en lo instalado, actualizaciones, cortafuegos y puertos
+Exec=python3 @HOME@/neural-deck/cve.py
+Icon=org.local.NeuralCVE
+Terminal=false
+Categories=System;Security;
+Keywords=cve;seguridad;vulnerabilidad;actualizar;arch;audit;cortafuegos;puertos;
+StartupWMClass=org.local.NeuralCVE

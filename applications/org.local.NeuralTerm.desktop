@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//TERM
+GenericName=Terminal
+Comment=Terminal con el estilo NEURAL//DECK
+Exec=python3 @HOME@/neural-deck/term.py
+Icon=org.local.NeuralTerm
+Terminal=false
+Categories=System;TerminalEmulator;
+Keywords=terminal;shell;consola;tty;
+StartupWMClass=org.local.NeuralTerm
+Actions=nueva-ventana;
+
+[Desktop Action nueva-ventana]
+Name=Nueva ventana
+Exec=python3 @HOME@/neural-deck/term.py

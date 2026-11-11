@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//PULSO
+GenericName=Monitor del sistema
+Comment=Procesos, CPU, GPU, memoria, red por app y batería
+Exec=python3 @HOME@/neural-deck/pulso.py
+Icon=org.local.NeuralPulso
+Terminal=false
+Categories=System;Monitor;
+Keywords=procesos;monitor;cpu;gpu;ram;bateria;red;btop;
+StartupWMClass=org.local.NeuralPulso

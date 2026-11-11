@@ -1,0 +1,9 @@
+[Unit]
+Description=NEURAL//CVE - revisa avisos de seguridad de Arch contra lo instalado
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -I %h/neural-deck/cve_motor.py --callado --aviso
+Nice=10
+NoNewPrivileges=yes

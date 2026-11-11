@@ -1,0 +1,190 @@
+{
+ "version": 6,
+ "theme": "red",
+ "themes": [
+  "violet",
+  "arctic",
+  "vapor"
+ ],
+ "panels": [
+  {
+   "id": "pmw6wmor5k",
+   "kind": "info",
+   "widget": "clock",
+   "title": "Reloj",
+   "x": 40,
+   "y": 75,
+   "w": 230,
+   "h": 230,
+   "shape": "round",
+   "min": false,
+   "rect": {
+    "x": 30,
+    "y": 87,
+    "w": 400,
+    "h": 170
+   }
+  },
+  {
+   "id": "pmw6wmor5n",
+   "kind": "info",
+   "widget": "battery",
+   "title": "Bater\u00eda",
+   "x": 336,
+   "y": 75,
+   "w": 230,
+   "h": 230,
+   "shape": "round",
+   "min": false,
+   "rect": {
+    "x": 30,
+    "y": 880,
+    "w": 400,
+    "h": 150
+   }
+  },
+  {
+   "id": "pmw6wmor5o",
+   "kind": "info",
+   "widget": "cpu",
+   "title": "Gr\u00e1fica CPU",
+   "x": 1636,
+   "y": 75,
+   "w": 230,
+   "h": 230,
+   "shape": "round",
+   "min": false,
+   "rect": {
+    "x": 1491,
+    "y": 82,
+    "w": 400,
+    "h": 200
+   }
+  },
+  {
+   "id": "pmw6wmor5p",
+   "kind": "info",
+   "widget": "cores",
+   "title": "N\u00facleos",
+   "x": 1354,
+   "y": 75,
+   "w": 230,
+   "h": 230,
+   "shape": "round",
+   "min": false,
+   "rect": {
+    "x": 1491,
+    "y": 334,
+    "w": 400,
+    "h": 190
+   }
+  },
+  {
+   "id": "pmw6wmor5q",
+   "kind": "info",
+   "widget": "processes",
+   "title": "Procesos",
+   "x": 1491,
+   "y": 599,
+   "w": 400,
+   "h": 207,
+   "shape": "rect",
+   "min": false,
+   "rect": {
+    "x": 1491,
+    "y": 577,
+    "w": 400,
+    "h": 230
+   }
+  },
+  {
+   "id": "pmw6wmor5r",
+   "kind": "info",
+   "widget": "host",
+   "title": "Equipo",
+   "x": 1491,
+   "y": 830,
+   "w": 400,
+   "h": 200,
+   "shape": "rect",
+   "min": false,
+   "rect": {
+    "x": 1491,
+    "y": 860,
+    "w": 400,
+    "h": 170
+   }
+  },
+  {
+   "id": "pmw6wmor5l",
+   "kind": "info",
+   "widget": "system",
+   "title": "Sistema",
+   "x": 28,
+   "y": 599,
+   "w": 400,
+   "h": 207,
+   "shape": "rect",
+   "min": false,
+   "rect": {
+    "x": 30,
+    "y": 329,
+    "w": 400,
+    "h": 230
+   }
+  },
+  {
+   "id": "pmw6wmor5m",
+   "kind": "info",
+   "widget": "network",
+   "title": "Red",
+   "x": 28,
+   "y": 830,
+   "w": 400,
+   "h": 200,
+   "shape": "rect",
+   "min": false,
+   "rect": {
+    "x": 30,
+    "y": 628,
+    "w": 400,
+    "h": 200
+   }
+  },
+  {
+   "id": "pmw6wmor5t",
+   "kind": "apps",
+   "title": "Apps",
+   "apps": [
+    "org.mozilla.firefox.desktop",
+    "foot.desktop",
+    "org.codeberg.dnkl.foot.desktop"
+   ],
+   "autoAll": true,
+   "hidden": [],
+   "autoroll": true,
+   "x": 698,
+   "y": 75,
+   "w": 524,
+   "h": 524,
+   "shape": "round",
+   "min": false,
+   "rect": {
+    "x": 720,
+    "y": 109,
+    "w": 480,
+    "h": 500
+   }
+  },
+  {
+   "id": "pmw6wmor5s",
+   "kind": "terminal",
+   "title": "Terminal",
+   "collapsed": false,
+   "x": 582,
+   "y": 680,
+   "w": 806,
+   "h": 367
+  }
+ ]
+}

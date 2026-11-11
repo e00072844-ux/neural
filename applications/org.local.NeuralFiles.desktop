@@ -1,0 +1,21 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//FILES
+GenericName=Gestor de archivos
+Comment=Explorar, copiar, mover y ver archivos con el estilo NEURAL//DECK
+Exec=python3 @HOME@/neural-deck/files.py %U
+Icon=org.local.NeuralFiles
+Terminal=false
+Categories=System;FileManager;Utility;
+Keywords=archivos;carpetas;explorador;files;folder;navegador;imágenes;visor;
+MimeType=inode/directory;image/png;image/jpeg;image/gif;
+StartupWMClass=org.local.NeuralFiles
+Actions=nueva-ventana;descargas;
+
+[Desktop Action nueva-ventana]
+Name=Nueva ventana
+Exec=python3 @HOME@/neural-deck/files.py
+
+[Desktop Action descargas]
+Name=Abrir la carpeta Descargas
+Exec=sh -c 'python3 @HOME@/neural-deck/files.py "$(xdg-user-dir DOWNLOAD)"'

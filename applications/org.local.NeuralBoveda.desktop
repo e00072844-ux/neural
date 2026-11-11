@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//BÓVEDA
+GenericName=Gestor de contraseñas
+Comment=Contraseñas, códigos 2FA y notas, cifrados y solo locales
+Exec=python3 @HOME@/neural-deck/boveda.py
+Icon=org.local.NeuralBoveda
+Terminal=false
+Categories=Utility;Security;
+Keywords=contraseñas;password;2fa;totp;boveda;vault;
+StartupWMClass=org.local.NeuralBoveda

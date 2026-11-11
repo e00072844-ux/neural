@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//DISCO
+GenericName=Discos
+Comment=Discos, particiones, formatear, salud y qué ocupa espacio
+Exec=python3 @HOME@/neural-deck/disco.py
+Icon=org.local.NeuralDisco
+Terminal=false
+Categories=System;Utility;
+Keywords=disco;espacio;analizador;ocupa;particion;usb;ssd;nvme;formatear;montar;expulsar;salud;smart;
+StartupWMClass=org.local.NeuralDisco

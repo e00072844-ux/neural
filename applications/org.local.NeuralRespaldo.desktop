@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//RESPALDO
+GenericName=Copias de seguridad
+Comment=Copias cifradas e incrementales a un disco externo
+Exec=python3 @HOME@/neural-deck/respaldo.py
+Icon=org.local.NeuralRespaldo
+Terminal=false
+Categories=System;Utility;
+Keywords=respaldo;backup;copia;restic;restaurar;usb;
+StartupWMClass=org.local.NeuralRespaldo

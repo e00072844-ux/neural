@@ -1,0 +1,15 @@
+# NEURAL: recompila el plugin neural-holo cuando cambia Wayfire o sus librerías.
+# Va en /etc/pacman.d/hooks/ (lo pone root/instalar.sh).
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = wayfire
+Target = wayfire-*
+Target = wf-config
+Target = wlroots*
+
+[Action]
+Description = NEURAL: recompilando el plugin neural-holo para el Wayfire nuevo...
+When = PostTransaction
+Exec = /usr/local/bin/neural-holo-recompilar

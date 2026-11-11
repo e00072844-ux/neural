@@ -1,0 +1,6 @@
+# NEURAL//VM: la sesión activa puede pasar dispositivos USB a sus máquinas virtuales
+# (QEMU usb-host abre /dev/bus/usb/… sin ser root). Lo instala ~/neural-deck/root/instalar.sh.
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", TAG+="uaccess"
+# Discos conectados por USB (memorias, SSD en adaptador): la sesión activa puede usarlos
+# enteros como disco de una VM. Los discos internos (SATA/NVMe) no se tocan.
+SUBSYSTEM=="block", ENV{DEVTYPE}=="disk", SUBSYSTEMS=="usb", TAG+="uaccess"

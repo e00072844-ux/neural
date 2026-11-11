@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//ESCUDO
+GenericName=Cortafuegos
+Comment=Reglas del cortafuegos, puertos abiertos, conexiones y bloqueos
+Exec=python3 @HOME@/neural-deck/escudo.py
+Icon=org.local.NeuralEscudo
+Terminal=false
+Categories=System;Security;
+Keywords=cortafuegos;firewall;ufw;puertos;conexiones;seguridad;
+StartupWMClass=org.local.NeuralEscudo

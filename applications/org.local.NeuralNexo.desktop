@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//NEXO
+GenericName=Transferencia local
+Comment=Pasa archivos entre tus dispositivos por la red local o Bluetooth, sin servidores
+Exec=python3 @HOME@/neural-deck/nexo.py %F
+Icon=org.local.NeuralNexo
+Terminal=false
+Categories=Network;FileTransfer;
+Keywords=archivos;enviar;transferir;bluetooth;android;compartir;
+StartupWMClass=org.local.NeuralNexo

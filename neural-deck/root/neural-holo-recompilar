@@ -1,0 +1,63 @@
+#!/bin/bash
+# neural-holo-recompilar — lo lanza pacman (hook neural-holo.hook) después de
+# actualizar wayfire, wf-config o wlroots. El plugin neural-holo (efecto
+# holograma) está compilado contra la versión exacta de Wayfire: si Wayfire
+# cambia, hay que volver a compilarlo o Wayfire podría no arrancar.
+#
+# Seguridad: corre como root, así que NO lee nada de la carpeta del usuario.
+#  - La fuente es la copia de root en /usr/local/src/neural-holo (la pone
+#    root/instalar.sh). Si alguien que no es root puede escribir en ella, no se usa.
+#  - Compila en una carpeta temporal como «nobody» (sin privilegios) y solo
+#    copia el .so y el .xml resultantes con install; nunca ejecuta «make install» como root.
+#  - Si NO compila, aparta el plugin viejo (libneural-holo.so.desactivado) para
+#    que Wayfire arranque igual, solo sin el efecto holograma.
+#  - Todo queda en /var/log/neural-holo.log
+# A mano:  sudo neural-holo-recompilar
+set -u
+export PATH=/usr/bin:/usr/sbin
+FUENTE=/usr/local/src/neural-holo
+DIR=$(pkg-config --variable=plugindir wayfire 2>/dev/null || echo /usr/lib/wayfire)
+META=$(pkg-config --variable=metadatadir wayfire 2>/dev/null || echo /usr/share/wayfire/metadata)
+SO="$DIR/libneural-holo.so"
+LOG=/var/log/neural-holo.log
+SIN_PRIVILEGIOS=nobody
+
+[ "$(id -u)" = 0 ] || { echo "neural-holo: hay que ejecutarlo como root"; exit 1; }
+echo "== $(date '+%F %T')  wayfire $(pacman -Q wayfire 2>/dev/null | cut -d' ' -f2)" >> "$LOG"
+
+segura() {  # la ruta y todo lo de dentro: de root y sin escritura para grupo/otros
+    [ -d "$1" ] && [ ! -L "$1" ] || return 1
+    [ -z "$(find "$1" \( ! -user root -o -perm /022 -o -type l \) -print -quit)" ] || return 1
+    local d="$1"
+    while [ "$d" != / ]; do
+        d=$(dirname "$d")
+        [ "$(stat -c %u "$d")" = 0 ] && [ -z "$(find "$d" -maxdepth 0 -perm /022)" ] || return 1
+    done
+}
+
+if [ ! -f "$FUENTE/neural-holo.cpp" ]; then
+    echo "neural-holo: no hay fuente en $FUENTE (ejecuta root/instalar.sh); no toco nada."
+    exit 0
+fi
+if ! segura "$FUENTE"; then
+    echo "neural-holo: $FUENTE no es solo de root (o tiene enlaces); por seguridad no compilo." | tee -a "$LOG"
+    exit 0
+fi
+
+TMP=$(mktemp -d)
+trap 'rm -rf "$TMP"' EXIT
+cp "$FUENTE/neural-holo.cpp" "$FUENTE/neural-holo.xml" "$FUENTE/Makefile" "$TMP/"
+chown -R "$SIN_PRIVILEGIOS:" "$TMP"
+if setpriv --reuid="$SIN_PRIVILEGIOS" --regid="$(id -g "$SIN_PRIVILEGIOS")" --clear-groups \
+        --no-new-privs --reset-env -- make -s -C "$TMP" libneural-holo.so >>"$LOG" 2>&1 \
+   && [ -f "$TMP/libneural-holo.so" ] && [ ! -L "$TMP/libneural-holo.so" ] \
+   && install -D -m 755 -o root -g root "$TMP/libneural-holo.so" "$SO" \
+   && install -D -m 644 -o root -g root "$TMP/neural-holo.xml" "$META/neural-holo.xml"; then
+    rm -f "$SO.desactivado"
+    echo "neural-holo: recompilado para la versión nueva de Wayfire ✓"
+else
+    [ -f "$SO" ] && mv -f "$SO" "$SO.desactivado"
+    echo "neural-holo: NO compiló con la versión nueva. Lo desactivé para que Wayfire arranque."
+    echo "             El resto de NEURAL funciona; solo falta el efecto holograma. Detalle: $LOG"
+fi
+exit 0   # nunca romper la actualización de pacman

@@ -1,0 +1,10 @@
+[Unit]
+Description=NEURAL//NEXO - transferencia local de archivos
+
+[Service]
+ExecStart=/usr/bin/python3 %h/neural-deck/nexo_motor.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target

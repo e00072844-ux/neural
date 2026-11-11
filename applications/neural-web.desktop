@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=NEURAL//WEB
+GenericName=Navegador
+Comment=Navegador propio con estilo NEURAL (WebKitGTK)
+Exec=python3 @HOME@/neural-deck/web.py %U
+Icon=org.local.NeuralWeb
+Terminal=false
+Categories=Network;WebBrowser;
+MimeType=text/html;x-scheme-handler/http;x-scheme-handler/https;
+StartupWMClass=org.local.NeuralWeb

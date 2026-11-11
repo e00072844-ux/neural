@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es" data-style="grid">
+<head>
+<meta charset="utf-8" />
+<title>Live Wallpaper</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="bg" aria-hidden="true">
+    <div id="bg-grid"><div id="bg-packets"></div></div>
+    <div id="bg-synth">
+      <div class="sun"></div>
+      <div class="horizon"></div>
+      <div class="floor"><canvas id="bg-floor-v"></canvas><div id="bg-hlines"></div></div>
+    </div>
+  </div>
+  <div class="fx-scan" aria-hidden="true"></div>
+  <div class="fx-sweep" aria-hidden="true"></div>
+  <div class="fx-vignette" aria-hidden="true"></div>
+
+  <!-- Barra superior: marca, estado, selector de tema y boton de edicion -->
+  <header id="hud-top">
+    <div class="hud-brand">
+      <span class="hud-logo">◢◤</span>
+      <span class="hud-name">NEURAL<b>//</b>DECK</span>
+      <span class="hud-ver">v2.077</span>
+    </div>
+    <div class="hud-status">
+      <span class="hud-dot"></span><span>ENLACE ACTIVO</span>
+      <span class="hud-sep">▪</span><span id="hud-host">--</span>
+      <span class="hud-sep">▪</span><span id="hud-clock">--:--</span>
+    </div>
+    <div class="hud-actions">
+      <span class="hud-label">TEMA</span>
+      <span id="theme-bar"></span>
+      <button id="edit-toggle" class="hud-btn" title="Mover, cambiar tamaño, agregar o quitar paneles (tecla E)">⚙ EDITAR</button>
+    </div>
+  </header>
+
+  <!-- Barra del modo edicion -->
+  <div id="edit-bar">
+    <span class="edit-bar-title">▲ MODO EDICIÓN</span>
+    <button class="hud-btn" id="add-apps-panel">+ PANEL DE APPS</button>
+    <button class="hud-btn" id="add-info-panel">+ PANEL DE INFO</button>
+    <button class="hud-btn" id="add-terminal-panel">+ TERMINAL</button>
+    <button class="hud-btn" id="shape-all" title="Cambia todos los paneles de info entre redondos y rectangulares">◯ REDONDOS</button>
+    <button class="hud-btn" id="open-themes">◆ TEMAS</button>
+    <span class="edit-bar-hint">Arrastra un panel para moverlo · bordes y esquinas para el tamaño · se imanta a las guías (Ctrl = libre) · ✎ renombrar · ⚙ tipo · ◯/▭ forma · – minimizar · ✕ quitar</span>
+    <button class="hud-btn danger" id="reset-board">RESTABLECER</button>
+    <button class="hud-btn danger" id="quit-wallpaper" title="Cierra el wallpaper (también Ctrl+Q)">⏻ CERRAR WALLPAPER</button>
+    <button class="hud-btn primary" id="edit-done">✓ LISTO</button>
+  </div>
+
+  <div id="board"></div>
+  <div id="guides" aria-hidden="true"></div>
+
+  <!-- Cinta inferior animada -->
+  <footer id="hud-bottom">
+    <div class="ticker"><div class="ticker-track" id="ticker-track"></div></div>
+  </footer>
+
+  <!-- Selector de apps -->
+  <div class="modal" id="picker" hidden>
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-code">APP//SELECT</span>
+        <span class="modal-title" id="picker-title">AGREGAR APPS</span>
+        <button class="hud-btn primary" id="picker-close">✓ LISTO</button>
+      </div>
+      <input type="text" id="picker-search" class="picker-search" placeholder="&gt; buscar app..." autocomplete="off" spellcheck="false" />
+      <div class="picker-list" id="picker-list"></div>
+      <div class="modal-foot">Clic para agregar o quitar · puedes agregar varias seguidas · Esc para cerrar</div>
+    </div>
+  </div>
+
+  <!-- Menu de tipos de panel de info -->
+  <div class="modal" id="info-menu" hidden>
+    <div class="modal-box small">
+      <div class="modal-head">
+        <span class="modal-code">MOD//INFO</span>
+        <span class="modal-title" id="info-menu-title">NUEVO PANEL DE INFO</span>
+        <button class="hud-btn" id="info-menu-close">✕</button>
+      </div>
+      <div class="info-menu-list" id="info-menu-list"></div>
+    </div>
+  </div>
+
+  <!-- Selector de temas (cuales aparecen en la barra superior) -->
+  <div class="modal" id="theme-menu" hidden>
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-code">SYS//THEME</span>
+        <span class="modal-title">TEMAS DE LA BARRA</span>
+        <button class="hud-btn primary" id="theme-menu-close">✓ LISTO</button>
+      </div>
+      <div class="theme-list" id="theme-list"></div>
+      <div class="modal-foot">Clic en un tema para ponerlo o quitarlo de la barra (máx. 6) · VER lo aplica ya · Esc para cerrar</div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="themes.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

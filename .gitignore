@@ -1,0 +1,32 @@
+# compilados
+__pycache__/
+*.pyc
+*.so
+*.o
+*.apk
+
+# entornos y registros
+.venv/
+venv/
+*.log
+*.antes-instalar
+*.antes-*
+
+# datos personales: nunca van al repo (viven en ~/.local/state, ~/vms, etc.)
+vm.json
+*.qcow2
+*.iso
+*.img
+*.gguf
+clave
+*.key
+*.pem
+.nexo-parcial
+notif-state.json
+dock-state.json
+teclado.json
+bar-state.json
+
+# notas privadas
+CLAUDE.md
+.env

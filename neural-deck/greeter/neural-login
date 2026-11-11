@@ -1,0 +1,29 @@
+#!/bin/bash
+# NEURAL//LOGIN con respaldo automático. Lo lanza greetd (default_session) como «greeter».
+# 1) Abre el greeter gráfico (Wayfire mínimo + neural-greeter.py).
+# 2) Si este se cierra SIN haber iniciado sesión (Wayfire roto, Python roto, el greeter
+#    se cayó, o se pulsó Ctrl+Alt+Retroceso), abre tuigreet: modo texto, sin compositor.
+# La marca la escribe neural-greeter.py justo cuando greetd acepta start_session.
+export HOME=/var/lib/greetd
+MARCA=/var/lib/greetd/neural-login-ok
+LOG=/var/lib/greetd/neural-login.log
+rm -f "$MARCA"
+
+if command -v wayfire >/dev/null 2>&1 && [ -r /etc/greetd/wayfire-greeter.ini ]; then
+    echo "$(date '+%F %T') NEURAL//LOGIN: abriendo" >> "$LOG"
+    # la salida de Wayfire va a un archivo para no ensuciar la consola de tuigreet
+    wayfire -c /etc/greetd/wayfire-greeter.ini > /var/lib/greetd/wayfire-greeter.log 2>&1
+    echo "$(date '+%F %T') NEURAL//LOGIN: Wayfire salió con $?" >> "$LOG"
+fi
+
+if [ -e "$MARCA" ]; then
+    rm -f "$MARCA"
+    exit 0   # sesión aceptada: greetd la arranca al salir el greeter
+fi
+
+echo "$(date '+%F %T') sin sesión: pasando a tuigreet" >> "$LOG"
+printf '\033c'   # limpia la consola por si Wayfire dejó basura
+exec tuigreet --time --asterisks --remember --remember-session \
+    --sessions /usr/share/wayland-sessions \
+    --greeting "NEURAL//LOGIN no arrancó · modo texto (F3: sesión)" \
+    --cmd /usr/local/bin/neural-sesion

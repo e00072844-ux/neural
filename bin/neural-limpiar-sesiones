@@ -1,0 +1,19 @@
+#!/bin/bash
+# Al empezar una sesión gráfica: termina los restos de MIS sesiones anteriores
+# que ya se cerraron (estado "closing") pero dejaron procesos vivos
+# (p. ej. Android Studio pintando en un Wayfire que ya no existe).
+# No toca: sesiones activas (tty1 de rescate), servicios de usuario
+# (user@.service), contenedores/máquinas (machine.slice, Kali), ni root.
+yo=$(id -u)
+actual=${XDG_SESSION_ID:-}
+log="$HOME/.cache/neural-limpiar-sesiones.log"
+loginctl list-sessions --no-legend 2>/dev/null | while read -r id uid _; do
+    [ "$uid" = "$yo" ] || continue
+    [ "$id" = "$actual" ] && continue
+    estado=$(loginctl show-session "$id" -p State --value 2>/dev/null)
+    clase=$(loginctl show-session "$id" -p Class --value 2>/dev/null)
+    [ "$estado" = closing ] && [ "$clase" = user ] || continue
+    echo "$(date '+%F %T') terminando sesión $id (restos de una sesión cerrada)" >> "$log"
+    loginctl terminate-session "$id" >> "$log" 2>&1
+done
+exit 0

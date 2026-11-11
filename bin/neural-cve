@@ -1,0 +1,3 @@
+#!/bin/sh
+# Revisión de seguridad a mano (avisos de Arch).  neural-cve [--sin-red]
+exec /usr/bin/python3 -I "$HOME/neural-deck/cve_motor.py" "$@"

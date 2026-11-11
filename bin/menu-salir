@@ -1,0 +1,12 @@
+#!/bin/bash
+# Menú de salida para Wayfire (Super+Esc), con wofi en modo lista.
+# Reiniciar/apagar sin sudo: polkit + logind lo permiten a la sesión activa.
+opcion=$(printf 'Bloquear\nSuspender\nCerrar sesión\nReiniciar\nApagar\n' \
+  | wofi --dmenu --lines 6 --width 240 --prompt 'Salir' --insensitive)
+case "$opcion" in
+  'Bloquear')      python3 "$HOME/neural-deck/bloqueo.py" ;;
+  'Suspender')     systemctl suspend ;;
+  'Cerrar sesión') pkill -x wayfire ;;
+  'Reiniciar')     systemctl reboot ;;
+  'Apagar')        systemctl poweroff ;;
+esac

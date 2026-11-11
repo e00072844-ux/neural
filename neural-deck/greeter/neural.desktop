@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=NEURAL
+Comment=Wayfire + neural-deck
+Exec=/usr/local/bin/neural-sesion
+Type=Application
+DesktopNames=Wayfire
